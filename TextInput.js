@@ -5,6 +5,10 @@ class TextInput {
         this.backgroundcolor = getComplementaryColor(this.color);
         this.lerpFactor = 0;
         this.targetColor = this.color;
+
+        // Create graphics buffers for background, shapes, and text
+        this.backgroundBuffer = createGraphics(windowWidth, windowHeight);
+        this.textBuffer = createGraphics(windowWidth, windowHeight);
     }
 
     setColor(newColor) {
@@ -13,11 +17,22 @@ class TextInput {
     }
 
     updateColor() {
-        this.color = lerpColor(this.color, this.targetColor, this.lerpFactor);
-        this.backgroundcolor = getComplementaryColor(this.color);
-        this.lerpFactor += 0.0001; // Increment the lerp factor
-        if (this.lerpFactor > 1) {
-            this.lerpFactor = 1; // Cap the lerp factor
+        /** little easter egg */
+        if (this.text.includes('brat')) {
+            this.targetColor = color(0,0,0);
+            this.color = lerpColor(this.color, this.targetColor, this.lerpFactor);
+            this.backgroundcolor = (lerpColor(this.backgroundcolor, color(168, 204, 0), this.lerpFactor));
+            this.lerpFactor += 0.001; // Increment the lerp factor
+            if (this.lerpFactor > 1) {
+                this.lerpFactor = 1; // Cap the lerp factor
+            }
+        } else {
+            this.color = lerpColor(this.color, this.targetColor, this.lerpFactor);
+            this.backgroundcolor = (lerpColor(this.backgroundcolor, getComplementaryColor(this.color), this.lerpFactor));
+            this.lerpFactor += 0.001; // Increment the lerp factor
+            if (this.lerpFactor > 1) {
+                this.lerpFactor = 1; // Cap the lerp factor
+            }
         }
     }
 
@@ -27,23 +42,22 @@ class TextInput {
         let textInput = this.text;
         let textColor = this.color;
 
+        // Clear the buffers
+        this.backgroundBuffer.clear();
+        this.textBuffer.clear();
+
+        // Draw the background
+        this.backgroundBuffer.background(this.backgroundcolor);
+
+        // Draw the text
         if (textInput) {
-            textSize(100);
-            textFont(customFont);
-            textAlign(CENTER, CENTER);
-            fill(textColor);
-            background(this.backgroundcolor);
-            text(textInput, windowWidth / 2, windowHeight / 2);
+            this.textBuffer.textSize(100);
+            this.textBuffer.textFont(customFont);
+            this.textBuffer.textAlign(CENTER, CENTER);
+            this.textBuffer.fill(textColor);
+            this.textBuffer.text(textInput, windowWidth / 2, windowHeight / 2);
         }
-        /** easter egg */
-        if (textInput.includes('brat')) {
-            background(138, 206, 0);
-            textSize(100);
-            textFont(customFont);
-            textAlign(CENTER, CENTER);
-            fill('black');
-            text(textInput, windowWidth / 2, windowHeight / 2);
-        }
+
     }
 }
 
@@ -63,3 +77,4 @@ function createColorFromText(text) {
 function getComplementaryColor(c) {
     return color(255 - red(c), 255 - green(c), 255 - blue(c));
 }
+
