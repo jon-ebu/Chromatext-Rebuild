@@ -18,7 +18,6 @@ function draw() {
     let textInput = new TextInput(input.value());
     let textColor = textInput.color;
     let textColorVals = [red(textColor), green(textColor), blue(textColor)];
-    console.log(textInput.color.levels);
     let background = new BackgroundColor(textColorVals[0], textColorVals[1], textColorVals[2]);
     background.draw();
     textInput.draw();
