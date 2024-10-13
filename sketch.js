@@ -6,22 +6,25 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-
-  /** Text input (hidden with CSS,
-   * the text itself is drawn in drawText) */
-  input = createElement('textarea');
-  input.position(20,30);
+    createCanvas(windowWidth, windowHeight);
+    background(0);
+    /** Text input (hidden with CSS,
+     * the text itself is drawn in drawText) */
+    input = createElement('textarea');
+    input.position(0, 0);
 }
 
 function draw() {
-  background(0);
-  let textInput = new TextInput(input.value());
-  textInput.draw();
+    let textInput = new TextInput(input.value());
+    let textColor = textInput.color;
+    let textColorVals = [red(textColor), green(textColor), blue(textColor)];
+    console.log(textInput.color.levels);
+    let background = new BackgroundColor(textColorVals[0], textColorVals[1], textColorVals[2]);
+    background.draw();
+    textInput.draw();
 }
 
 window.windowResized = function () {
     // Resize the canvas when the window is resized
     resizeCanvas(windowWidth, windowHeight);
-    setBackgroundColor();
 }
