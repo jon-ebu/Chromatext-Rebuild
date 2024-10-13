@@ -12,3 +12,12 @@ html, body {
     height: 100%;
     opacity: 0;
   }
+
+  @font-face {
+    font-family: 'KH Teka TRIAL';
+    src: url('KHTekaTRIAL-Regular.woff2') format('woff2'),
+        url('KHTekaTRIAL-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
